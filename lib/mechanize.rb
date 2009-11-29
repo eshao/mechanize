@@ -81,6 +81,7 @@ class Mechanize
   attr_accessor :history_added
   attr_accessor :scheme_handlers
   attr_accessor :redirection_limit
+  attr_accessor :throttle
 
   # A hash of custom request headers
   attr_accessor :request_headers
@@ -611,6 +612,7 @@ class Mechanize
   end
 
   def add_to_history(page)
+    sleep(2 + rand(2 * @throttle))
     @history.push(page, resolve(page.uri))
     history_added.call(page) if history_added
   end
